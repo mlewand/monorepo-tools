@@ -31,8 +31,10 @@ for PARAM in $@; do
     # Rewrite all branches from the first remote, only master branches from others
     if [ "$PARAM" == "$1" ]; then
         echo "Building all branches of the remote '$REMOTE'"
-        $MONOREPO_SCRIPT_DIR/load_branches_from_remote.sh $REMOTE
-        $MONOREPO_SCRIPT_DIR/rewrite_history_into.sh $SUBDIRECTORY --branches
+
+        echo "$REMOTE is considered to be a root repo, so just merge its master branch"
+        git merge main-repository/master
+
         MERGE_REFS='master'
     else
         echo "Building branch 'master' of the remote '$REMOTE'"
